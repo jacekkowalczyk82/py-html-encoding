@@ -1,0 +1,21 @@
+name: Build Windows Executable 
+on: [push]
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps: 
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+    - name: Install dependencies
+      run: pip install pyinstaller
+    - name: Build executable
+      run: pyinstaller --onefile --console main.py
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with: 
+        name: html-encoding-windows-executable
+        path: dist/*.exe 
+    
